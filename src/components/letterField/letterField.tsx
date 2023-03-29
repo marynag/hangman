@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import styles from './letterFiels.module.css';
 
 const LetterField = ({ value, onChange }) => {
 	const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -8,7 +9,14 @@ const LetterField = ({ value, onChange }) => {
 			onChange(value);
 		}
 	};
-	return <input name='letter' value={value} onChange={handleChange} />;
+	return (
+		<input
+			className={styles.userInput}
+			name='letter'
+			value={value}
+			onChange={handleChange}
+		/>
+	);
 };
 
 export default LetterField;

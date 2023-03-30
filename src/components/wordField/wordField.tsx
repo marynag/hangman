@@ -1,27 +1,39 @@
 import LetterField from '../letterField/letterField.tsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IWord } from '../../interfaces.ts';
 import { LETTERS } from '../../constants/constants.ts';
+import { fetchData } from '../../requests/requests.ts';
 
 const WordField = () => {
-	const [word, setWord] = useState<IWord[]>(LETTERS);
+	const [userWord, setUserWord] = useState<IWord[]>(LETTERS);
+	const [word, setWord] = useState<IWord>();
+
+	useEffect(() => {
+		const getData = async () => {
+			const data = await fetchData();
+			setWord(data);
+		};
+		getData();
+	}, []);
 
 	const handleSubmit = () => {
-		console.log(word.join(''));
+		const userInput = userWord.join('');
+		const isWordsMatch = userInput === word;
 	};
 	return (
 		<>
-			{word.map((letter, index) => {
+			{userWord.map((letter, index) => {
 				return (
 					<LetterField
 						key={letter}
 						letter={letter}
-						onChange={setWord}
-						word={word}
+						onChange={setUserWord}
+						word={userWord}
 						position={index}
 					/>
 				);
 			})}
+			{console.log(word)}
 			<button onClick={handleSubmit}>Submit</button>
 		</>
 	);

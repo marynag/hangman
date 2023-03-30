@@ -1,20 +1,23 @@
-import { ChangeEvent } from 'react';
 import styles from './letterFiels.module.css';
+import { ChangeEvent } from 'react';
 
-const LetterField = ({ value, onChange }) => {
-	const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-		if (e.target.name === 'letter' && Array.isArray(value)) {
-			const index = value[e.nativeEvent.eventPhase];
-			value[index] = e.nativeEvent.eventPhase;
-			onChange(value);
-		}
-	};
+const LetterField = ({ letter, word, onChange, position }) => {
+	const handleChange =
+		(position: number) => (e: ChangeEvent<HTMLInputElement>) => {
+			if (e.target.name === 'letter' && Array.isArray(word)) {
+				const newWord = [...word];
+				newWord[position] = e.target.value;
+				onChange(newWord);
+			}
+		};
 	return (
 		<input
 			className={styles.userInput}
 			name='letter'
-			value={value}
-			onChange={handleChange}
+			value={letter}
+			id={letter}
+			maxLength='1'
+			onChange={handleChange(position)}
 		/>
 	);
 };

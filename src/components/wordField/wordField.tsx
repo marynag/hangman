@@ -5,11 +5,24 @@ import { LETTERS } from '../../constants/constants.ts';
 
 const WordField = () => {
 	const [word, setWord] = useState<IWord[]>(LETTERS);
+
+	const handleSubmit = () => {
+		console.log(word.join(''));
+	};
 	return (
 		<>
-			{word.map((item, index) => {
-				return <LetterField key={index} value={item} onChange={setWord} />;
+			{word.map((letter, index) => {
+				return (
+					<LetterField
+						key={letter}
+						letter={letter}
+						onChange={setWord}
+						word={word}
+						position={index}
+					/>
+				);
 			})}
+			<button onClick={handleSubmit}>Submit</button>
 		</>
 	);
 };
